@@ -87,10 +87,16 @@ public class GetBookingTest {
         Assert.assertEquals(r.statusCode(), 200);
         Assert.assertEquals(r.body().path("firstname"), booking.getFirstname());
         Assert.assertEquals(r.body().path("lastname"), booking.getLastname());
-        Assert.assertNotNull(r.body().path("totalprice"));
-        Assert.assertNotNull(r.body().path("depositpaid"));
-        Assert.assertNotNull(r.body().path("bookingdates"));
-        Assert.assertNotNull(r.body().path("additionalneeds"));
+        Assert.assertEquals(r.body().path("depositpaid"), booking.isDepositpaid());
+        Assert.assertEquals(r.body().path("bookingdates.checkin"), booking.getBookingdates().getCheckin());
+        Assert.assertEquals(r.body().path("bookingdates.checkout"), booking.getBookingdates().getCheckout());
+        Assert.assertEquals(r.body().path("additionalneeds"), booking.getAdditionalneeds());
+    }
+
+    @Test
+    public void verifyGetBookingByInValidID() throws URISyntaxException {
+        Response r = bookingRestService.getBookingById(0000);
+        Assert.assertEquals(r.statusCode(), 404);
     }
 
     public void assertBookingID(Map<String, String> filters) throws URISyntaxException {
