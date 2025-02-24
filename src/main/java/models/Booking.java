@@ -7,7 +7,6 @@ public class Booking {
     private boolean depositpaid;
     private BookingDates bookingdates;
     private String additionalneeds;
-    private int id;
 
     private Booking(BookingBuilder builder) {
         this.firstname = builder.firstname;
@@ -16,7 +15,6 @@ public class Booking {
         this.depositpaid = builder.depositpaid;
         this.bookingdates = builder.bookingdates;
         this.additionalneeds = builder.additionalneeds;
-        this.id = builder.id;
     }
 
     public static class BookingBuilder {
@@ -58,10 +56,6 @@ public class Booking {
             return this;
         }
 
-        public BookingBuilder withId(int id) {
-            this.id = id;
-            return this;
-        }
         public Booking build() {
             return new Booking(this);
         }
@@ -91,7 +85,4 @@ public class Booking {
         return additionalneeds;
     }
 
-    public int getId() {
-        return id;
-    }
 }
