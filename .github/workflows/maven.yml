@@ -2,7 +2,7 @@ name: Run API Integration Tests
 
 on:
   schedule:
-    # Runs at noon (UTC) Monday through Friday
+    # Runs at 12:00 PM (UTC) Monday through Friday
     - cron: '0 12 * * 1-5'
   push:
     branches: [ main ]
@@ -12,6 +12,13 @@ on:
 jobs:
   QuantiniuumAPITests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [ prod ] # any number of environments can be added.
+        include:
+          - environment: prod
+              baseUrl: "https://dev-api.example.com"
+              # more environment configs and their baseUrl can be added here to run on CI.
 
     steps:
       - name: Checkout repository
@@ -23,5 +30,6 @@ jobs:
           distribution: 'temurin'
           java-version: '18'
 
-      - name: Build and run tests
-        run: mvn clean test
+      -name: Build and run tests on ${{ matrix.environment }}
+        run: mvn clean test -DbaseUrl=${{ matrix.baseUrl }}
+
