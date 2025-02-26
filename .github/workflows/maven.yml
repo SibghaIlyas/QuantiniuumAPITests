@@ -17,7 +17,7 @@ jobs:
         environment: [ prod ] # any number of environments can be added.
         include:
           - environment: prod
-              baseUrl: "https://restful-booker.herokuapp.com"
+            baseUrl: "https://restful-booker.herokuapp.com"
               # more environment configs and their baseUrl can be added here to run on CI.
 
     steps:
